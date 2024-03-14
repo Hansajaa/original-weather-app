@@ -1,6 +1,6 @@
 import React from "react";
 
-function SearchBar() {
+function Navbar() {
   return (
     <div>
       <nav class="navbar navbar-dark fixed-top">
@@ -8,6 +8,8 @@ function SearchBar() {
           <a class="navbar-brand" href="#">
             Weather Pulse
           </a>
+          <input type="text" className="form-control mt-3" style={{width:"30%", borderRadius:"30px"}} placeholder="Search City"/>
+          <button className="btn btn-secondary mt-3" style={{borderRadius:"30px", marginLeft:"-25%"}}><i class="bi bi-search"></i></button>
           <button
             class="navbar-toggler"
             type="button"
@@ -70,4 +72,4 @@ function SearchBar() {
   );
 }
 
-export default SearchBar;
+export default Navbar;
