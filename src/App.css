@@ -12,6 +12,7 @@ html body {
   height: 700px;
   width:100%;
   filter: brightness(90%);
+  overflow-y: scroll;
 }
 
 @media (max-width: 480px) {
