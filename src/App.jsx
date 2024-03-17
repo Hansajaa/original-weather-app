@@ -1,4 +1,5 @@
 import "./App.css";
+import CurrentWeatherCard from "./components/CurrentWeatherCard";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -6,9 +7,9 @@ function App() {
     <>
       <div className="home-page blur">
         <div className="container">
-          <div className="row">
+          
             <Navbar></Navbar>
-          </div>
+  
         </div>
       </div>
     </>
