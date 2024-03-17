@@ -1,7 +1,7 @@
 import "./CurrentWeatherCard.css"
 import { useState, useEffect } from "react";
-
-
+import cloudsImage from '../assets/images/clouds.png'
+import locationImage from '../assets/location-icon.png'
 
 export default function CurrentWeatherCard(props) {
   
@@ -21,7 +21,7 @@ export default function CurrentWeatherCard(props) {
 
             <div className="row">
               <div className="text-center mt-3">
-                <img src="../assets/images/drizzle.png" alt="weather-icon" width={120}/>
+                <img src={cloudsImage} alt="weather-icon" width={120}/>
               </div>
             </div>
 
@@ -43,12 +43,12 @@ export default function CurrentWeatherCard(props) {
             <hr style={{ color: "white" }}></hr>
 
             <div className="row">
-              <div className="col-3">
-                <img src="public/location-icon.png" alt="location-icon" />
+              <div className="col-3 mt-3">
+                <img src={locationImage} alt="location-icon" />
               </div>
-              <div className="col">
+              <div className="col mt-3" style={{marginLeft:"-10%"}}>
                 <p>
-                  
+                  Colombo, Western, Sri Lanka
                 </p>
               </div>
             </div>

@@ -89,6 +89,10 @@ function Navbar() {
           </div>
         </nav>
       </div>
+
+      <div className="row" style={{margin:"10%",marginTop:"-10%"}}>
+        <CurrentWeatherCard></CurrentWeatherCard>
+      </div>
     </div>
   );
 }
