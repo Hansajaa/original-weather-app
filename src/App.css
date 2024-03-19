@@ -15,6 +15,11 @@ html body {
   overflow-y: scroll;
 }
 
+.content{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 480px) {
 }
 

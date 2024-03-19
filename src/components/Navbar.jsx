@@ -1,10 +1,13 @@
 import React from "react";
 import {} from "./Navbar.css";
 import CurrentWeatherCard from "./CurrentWeatherCard";
+import FeatureCard from "./FeatureCard";
+import AdditionalCard from "./AdditionalCard";
+import ForecastCard from "./ForecastCard";
 
 function Navbar() {
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
         <nav className="navbar navbar-dark fixed-top mt-3">
           <div className="container-fluid">
@@ -90,8 +93,36 @@ function Navbar() {
         </nav>
       </div>
 
-      <div className="row" style={{margin:"10%",marginTop:"-10%"}}>
-        <CurrentWeatherCard></CurrentWeatherCard>
+      <div className="row" style={{ marginLeft: "-2rem", marginTop: "3rem" }}>
+        <div className="col-3 main-card">
+          <CurrentWeatherCard></CurrentWeatherCard>
+        </div>
+        <div className="col-9" style={{ marginLeft: "4%", marginTop: "2%" }}>
+          <div className="row">
+            <div className="col">
+              <FeatureCard></FeatureCard>
+            </div>
+            <div className="col">
+              <FeatureCard></FeatureCard>
+            </div>
+            <div className="col">
+              <FeatureCard></FeatureCard>
+            </div>
+            <div className="col">
+              <FeatureCard></FeatureCard>
+            </div>
+          </div>
+          <div className="row">
+            <AdditionalCard></AdditionalCard>
+          </div>
+        </div>
+      </div>
+
+      {/* Forecast card row */}
+      <div className="row" style={{marginTop:"-32%", marginLeft:"-17%"}}>
+        <div className="col-12">
+          <ForecastCard></ForecastCard>
+        </div>
       </div>
     </div>
   );
