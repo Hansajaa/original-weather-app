@@ -18,7 +18,7 @@ function Footer(props) {
               </svg>
             </a>
             <span class="mb-3 mb-md-0" style={{color:"white"}}>
-              &copy; 2024 Company, Inc
+              &copy; 2024 All right reserved Hansaja
             </span>
           </div>
 
