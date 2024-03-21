@@ -1,9 +1,12 @@
 import React from "react";
 import {} from "./Navbar.css";
 import CurrentWeatherCard from "./CurrentWeatherCard";
-import FeatureCard from "./FeatureCard";
 import AdditionalCard from "./AdditionalCard";
 import ForecastCard from "./ForecastCard";
+import WindCard from "./WindCard";
+import HumadityCard from "./HumadityCard";
+import FeelsLikeByCelcius from "./FeelsLikeByCelcius";
+import FeelsLikeByFarenheit from "./FeelsLikeByFarenheit";
 
 function Navbar() {
   return (
@@ -93,23 +96,23 @@ function Navbar() {
         </nav>
       </div>
 
-      <div className="row" style={{ marginLeft: "-2rem", marginTop: "3rem" }}>
+      <div className="row" style={{ marginLeft: "-2rem", marginTop: "7rem" }}>
         <div className="col-3 main-card">
           <CurrentWeatherCard></CurrentWeatherCard>
         </div>
         <div className="col-9" style={{ marginLeft: "4%", marginTop: "2%" }}>
           <div className="row">
             <div className="col">
-              <FeatureCard></FeatureCard>
+              <WindCard></WindCard>
             </div>
             <div className="col">
-              <FeatureCard></FeatureCard>
+              <HumadityCard></HumadityCard>
             </div>
             <div className="col">
-              <FeatureCard></FeatureCard>
+              <FeelsLikeByCelcius></FeelsLikeByCelcius>
             </div>
             <div className="col">
-              <FeatureCard></FeatureCard>
+              <FeelsLikeByFarenheit></FeelsLikeByFarenheit>
             </div>
           </div>
           <div className="row">
@@ -117,6 +120,11 @@ function Navbar() {
           </div>
         </div>
       </div>
+
+
+      <p style={{fontSize:"20px", marginBottom:"3%", marginTop:"-1%", marginLeft:"-8%"}}>
+        <b>5 Days Forecast</b>
+      </p>
 
       {/* Forecast card row */}
       <div className="row" style={{marginTop:"-32%", marginLeft:"-17%"}}>
