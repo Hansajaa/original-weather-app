@@ -1,0 +1,44 @@
+.weather-card {
+    margin-top: 30%;
+    backdrop-filter: blur(1px) saturate(200%);
+    -webkit-backdrop-filter: blur(10px) saturate(300%);
+    background-color: rgba(255, 255, 255, 0.404);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.heading{
+    margin-left: 5%;
+}
+
+
+p{
+    color: white;
+}
+
+.location-img-col{
+  width: 15%;
+}
+
+
+
+@media (max-width: 480px) {
+
+}
+
+/* Styles for screens between 481px and 768px wide (larger smartphones and small tablets) */
+@media (min-width: 481px) and (max-width: 681px) {
+}
+
+/* Styles for screens between 682px and 760px wide */
+@media (min-width: 682px) and (max-width: 760px) {
+    
+}
+
+/* Styles for screens between 769px and 1024px wide (larger tablets and small desktops) */
+@media (min-width: 761px) and (max-width: 1024px) {
+}
+
+/* Styles for screens 1025px and above (larger desktops) */
+@media (min-width: 1025px) {
+}
