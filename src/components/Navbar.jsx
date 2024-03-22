@@ -10,7 +10,7 @@ import FeelsLikeByFarenheit from "./FeelsLikeByFarenheit";
 
 function Navbar() {
   return (
-    <div className="container-fluid">
+    <div className="container">
       <div className="row">
         <nav className="navbar navbar-dark fixed-top mt-3">
           <div className="container-fluid">
