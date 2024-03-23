@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {} from "./Navbar.css";
 import CurrentWeatherCard from "./CurrentWeatherCard";
 import AdditionalCard from "./AdditionalCard";
@@ -8,16 +8,34 @@ import HumadityCard from "./HumadityCard";
 import FeelsLikeByCelcius from "./FeelsLikeByCelcius";
 import FeelsLikeByFarenheit from "./FeelsLikeByFarenheit";
 import Aos from "aos";
-import 'aos/dist/aos.js'
-import 'aos/dist/aos.css'
+import "aos/dist/aos.js";
+import "aos/dist/aos.css";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 function Navbar() {
 
-  useEffect(()=>{
+  const [city,setCity] = useState("Colombo");
+
+
+  // Initial loading Animation
+  useEffect(() => {
     Aos.init({
-      duration:2000
-    })
-  },[]);
+      duration: 2000,
+    });
+  }, []);
+
+  
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  // API call while button onClick 
+  const onSubmit = (data) => {
+    setCity(data.txtCity);
+  };
 
   return (
     <div className="container">
@@ -28,6 +46,7 @@ function Navbar() {
               Weather Pulse
             </a>
             <input
+              {...register("txtCity", { required: true })}
               id="txtSearch"
               type="text"
               className="form-control mt-3"
@@ -38,6 +57,7 @@ function Navbar() {
               id="searchBtn"
               className="btn btn-secondary mt-3"
               style={{ borderRadius: "30px" }}
+              onClick={handleSubmit(onSubmit)}
             >
               <i className="bi bi-search"></i>
             </button>
@@ -108,21 +128,21 @@ function Navbar() {
 
       <div className="row" style={{ marginLeft: "-2rem", marginTop: "7rem" }}>
         <div className="col-3 main-card">
-          <CurrentWeatherCard></CurrentWeatherCard>
+          <CurrentWeatherCard currentCity={city}></CurrentWeatherCard>
         </div>
         <div className="col-9" style={{ marginLeft: "4%", marginTop: "2%" }}>
           <div className="row">
             <div className="col">
-              <WindCard></WindCard>
+              <WindCard currentCity={city}></WindCard>
             </div>
             <div className="col">
-              <HumadityCard></HumadityCard>
+              <HumadityCard currentCity={city}></HumadityCard>
             </div>
             <div className="col">
-              <FeelsLikeByCelcius></FeelsLikeByCelcius>
+              <FeelsLikeByCelcius currentCity={city}></FeelsLikeByCelcius>
             </div>
             <div className="col">
-              <FeelsLikeByFarenheit></FeelsLikeByFarenheit>
+              <FeelsLikeByFarenheit currentCity={city}></FeelsLikeByFarenheit>
             </div>
           </div>
           <div className="row">
@@ -131,13 +151,19 @@ function Navbar() {
         </div>
       </div>
 
-
-      <p style={{fontSize:"20px", marginBottom:"3%", marginTop:"-1%", marginLeft:"-8%"}}>
+      <p
+        style={{
+          fontSize: "20px",
+          marginBottom: "3%",
+          marginTop: "-1%",
+          marginLeft: "-8%",
+        }}
+      >
         <b>5 Days Forecast</b>
       </p>
 
       {/* Forecast card row */}
-      <div className="row" style={{marginTop:"-32%", marginLeft:"-17%"}}>
+      <div className="row" style={{ marginTop: "-32%", marginLeft: "-17%" }}>
         <div className="col-12">
           <ForecastCard></ForecastCard>
         </div>
