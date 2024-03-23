@@ -2,12 +2,35 @@ import "./CurrentWeatherCard.css"
 import { useState, useEffect } from "react";
 import cloudsImage from '../assets/images/clouds.png'
 import locationImage from '../assets/location-icon.png'
+import axios from "axios";
 
 export default function CurrentWeatherCard(props) {
+
+  const apiKey = "5ffcc797bd1c4bc4b3730517242502";
+
+  const [data,setData] = useState();
+
+  
+  useEffect(()=>{
+    const city = props?.currentCity;
+    axios.get(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`)
+    .then(function(response){
+      
+      setData(response.data)
+      console.log(response.data);
+
+    })
+    .catch(function(error){
+      console.log(error);
+    })
+  },[props?.currentCity])
+
+  let currentTemp = Math.round(data?.current.temp_c);
   
   return (
     <div className="container mb-5">
       <div
+        data-aos="fade-right"
         className="weather-card"
         style={{ width: "19rem", height: "25rem", borderRadius: "30px", marginLeft:"-20%"}}
       >
@@ -21,7 +44,7 @@ export default function CurrentWeatherCard(props) {
 
             <div className="row">
               <div className="text-center mt-3">
-                <img src={cloudsImage} alt="weather-icon" width={120}/>
+                <img src={data?.current.condition.icon} alt="weather-icon" width={120}/>
               </div>
             </div>
 
@@ -36,7 +59,7 @@ export default function CurrentWeatherCard(props) {
                 className="card-text text-center"
                 style={{ color: "white", fontSize: "80px" }}
               >
-                 25 &#8451;
+                 {currentTemp} &#8451;
               </h1>
             </div>
 
@@ -48,7 +71,7 @@ export default function CurrentWeatherCard(props) {
               </div>
               <div className="col mt-3" style={{marginLeft:"-10%"}}>
                 <p>
-                  Colombo, Western, Sri Lanka
+                  {data?.location.name}, {data?.location.region}, {data?.location.country}
                 </p>
               </div>
             </div>

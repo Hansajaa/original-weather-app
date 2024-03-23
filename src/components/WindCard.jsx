@@ -1,11 +1,33 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import WindImage from '../assets/images/wind.png'
 import './WindCard.css'
+import axios from "axios";
 
 function WindCard(props) {
+
+  const apiKey = "ff4b41be54077fc82ce47fc4894362a7";
+
+  const [data,setData] = useState();
+
+  
+  useEffect(()=>{
+    const city = props?.currentCity;
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+    .then(function(response){
+      
+      setData(response.data)
+      //console.log(response.data);
+
+    })
+    .catch(function(error){
+      console.log(error);
+    })
+  },[props?.currentCity])
+
   return (
     <div className="container" >
       <div
+        data-aos="fade-right"
         className="weather-card"
         style={{
           width: "10rem",
@@ -28,7 +50,7 @@ function WindCard(props) {
                 className="card-text text-center"
                 style={{ color: "white", fontSize: "40px" }}
               >
-                2.2 mph
+                {data?.wind.gust} mph
               </h6>
             </div>
             
