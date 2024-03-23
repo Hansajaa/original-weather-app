@@ -5,6 +5,7 @@ function FeelsLikeByFarenheit(props) {
   return (
     <div className="container" >
       <div
+        data-aos="fade-right"
         className="weather-card"
         style={{
           width: "10rem",

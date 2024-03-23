@@ -8,6 +8,7 @@ export default function CurrentWeatherCard(props) {
   return (
     <div className="container mb-5">
       <div
+        data-aos="fade-right"
         className="weather-card"
         style={{ width: "19rem", height: "25rem", borderRadius: "30px", marginLeft:"-20%"}}
       >

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {} from "./Navbar.css";
 import CurrentWeatherCard from "./CurrentWeatherCard";
 import AdditionalCard from "./AdditionalCard";
@@ -7,8 +7,18 @@ import WindCard from "./WindCard";
 import HumadityCard from "./HumadityCard";
 import FeelsLikeByCelcius from "./FeelsLikeByCelcius";
 import FeelsLikeByFarenheit from "./FeelsLikeByFarenheit";
+import Aos from "aos";
+import 'aos/dist/aos.js'
+import 'aos/dist/aos.css'
 
 function Navbar() {
+
+  useEffect(()=>{
+    Aos.init({
+      duration:2000
+    })
+  },[]);
+
   return (
     <div className="container">
       <div className="row">
