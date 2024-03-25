@@ -26,6 +26,7 @@ export default function CurrentWeatherCard(props) {
   },[props?.currentCity])
 
   let currentTemp = Math.round(data?.current.temp_c);
+  console.log(currentTemp);
   
   return (
     <div className="container mb-5">

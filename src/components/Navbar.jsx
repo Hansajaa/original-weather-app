@@ -14,9 +14,19 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 function Navbar() {
+  const [city, setCity] = useState("Colombo");
 
-  const [city,setCity] = useState("Colombo");
+  // get Current Location
+  const [location, setLocation] = useState();
+  const [initialLoading, setInitialLoading] = useState(true);
 
+  if (navigator.geolocation && initialLoading) {
+    const watchId = navigator.geolocation.watchPosition((position) => {
+      setLocation(position);
+      //console.log(position.coords.latitude, position.coords.longitude);
+    });
+    setInitialLoading(false);
+  }
 
   // Initial loading Animation
   useEffect(() => {
@@ -25,14 +35,13 @@ function Navbar() {
     });
   }, []);
 
-  
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
 
-  // API call while button onClick 
+  // API call while button onClick
   const onSubmit = (data) => {
     setCity(data.txtCity);
   };
@@ -128,7 +137,11 @@ function Navbar() {
 
       <div className="row" style={{ marginLeft: "-2rem", marginTop: "7rem" }}>
         <div className="col-3 main-card">
-          <CurrentWeatherCard currentCity={city}></CurrentWeatherCard>
+          <CurrentWeatherCard
+            lat={location?.coords.latitude}
+            lon={location?.coords.longitude}
+            currentCity={city}
+          ></CurrentWeatherCard>
         </div>
         <div className="col-9" style={{ marginLeft: "4%", marginTop: "2%" }}>
           <div className="row">
