@@ -14,7 +14,9 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 function Navbar() {
-  const [city, setCity] = useState("Colombo");
+  const apiKey = "ff4b41be54077fc82ce47fc4894362a7"
+
+  const [city, setCity] = useState("colombo");
 
   // get Current Location
   const [location, setLocation] = useState();
@@ -23,10 +25,27 @@ function Navbar() {
   if (navigator.geolocation && initialLoading) {
     const watchId = navigator.geolocation.watchPosition((position) => {
       setLocation(position);
-      //console.log(position.coords.latitude, position.coords.longitude);
+      //console.log(location?.coords.longitude);
     });
     setInitialLoading(false);
   }
+
+  // get current location by latitude and longitude
+  useEffect(()=>{
+
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${location?.coords.latitude}&lon=${location?.coords.longitude}&appid=${apiKey}`)
+    .then(function (response) {
+      
+      console.log(response);
+      console.log(response.data);
+      console.log(response.data.name);
+      setCity(response.data.name);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+
+  },[]);
 
   // Initial loading Animation
   useEffect(() => {
@@ -47,7 +66,7 @@ function Navbar() {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
         <nav className="navbar navbar-dark fixed-top mt-3">
           <div className="container-fluid">
@@ -138,8 +157,6 @@ function Navbar() {
       <div className="row" style={{ marginLeft: "-2rem", marginTop: "7rem" }}>
         <div className="col-3 main-card">
           <CurrentWeatherCard
-            lat={location?.coords.latitude}
-            lon={location?.coords.longitude}
             currentCity={city}
           ></CurrentWeatherCard>
         </div>
@@ -168,7 +185,7 @@ function Navbar() {
         style={{
           fontSize: "20px",
           marginBottom: "3%",
-          marginTop: "-1%",
+          marginTop: "2%",
           marginLeft: "-8%",
         }}
       >
@@ -177,7 +194,7 @@ function Navbar() {
 
       {/* Forecast card row */}
       <div className="row" style={{ marginTop: "-32%", marginLeft: "-17%" }}>
-        <div className="col-12">
+        <div className="col forecast-card">
           <ForecastCard></ForecastCard>
         </div>
       </div>
