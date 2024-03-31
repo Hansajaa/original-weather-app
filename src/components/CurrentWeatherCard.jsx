@@ -71,7 +71,7 @@ export default function CurrentWeatherCard(props) {
               </div>
               <div className="col mt-3" style={{marginLeft:"-10%"}}>
                 <p>
-                  {data?.location.name}, {data?.location.region}, {data?.location.country}
+                  {data?.location.name+", "+data?.location.region+", "+data?.location.country}
                 </p>
               </div>
             </div>
