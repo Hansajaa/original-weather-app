@@ -1,10 +1,11 @@
 html body {
   /* background-color: #01040F; */
+  /* background-color: rgb(0, 0, 0); */
   min-width: 400px;
 }
 
 .home-page {
-  background-image: url(./assets/background-image.jpg);
+  background-image: url(./assets/new-background-img.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

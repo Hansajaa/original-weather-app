@@ -34,7 +34,7 @@ function FeelsLikeByCelcius(props) {
           width: "11rem",
           height: "15rem",
           borderRadius: "30px",
-          marginLeft: "20%",
+          marginLeft: "27%",
         }}
       >
         <div className="card-body">

@@ -77,13 +77,13 @@ function Navbar() {
               {...register("txtCity", { required: true })}
               id="txtSearch"
               type="text"
-              className="form-control mt-3"
+              className="form-control mt-3 bg-light border-dark"
               style={{ width: "30%", borderRadius: "30px" }}
               placeholder="Search City"
             />
             <button
               id="searchBtn"
-              className="btn btn-secondary mt-3"
+              className="btn btn-dark mt-3"
               style={{ borderRadius: "30px" }}
               onClick={handleSubmit(onSubmit)}
             >

@@ -33,7 +33,7 @@ function HumadityCard(props) {
           width: "11rem",
           height: "15rem",
           borderRadius: "30px",
-          marginLeft: "20%",
+          marginLeft: "22%",
         }}
       >
         <div className="card-body">
