@@ -30,10 +30,10 @@ function FeelsLikeByFarenheit(props) {
         data-aos="fade-right"
         className="weather-card"
         style={{
-          width: "10rem",
+          width: "11rem",
           height: "15rem",
           borderRadius: "30px",
-          marginLeft: "-20%",
+          marginLeft: "20%",
         }}
       >
         <div className="card-body">

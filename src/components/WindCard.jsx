@@ -30,10 +30,10 @@ function WindCard(props) {
         data-aos="fade-right"
         className="weather-card"
         style={{
-          width: "10rem",
+          width: "11rem",
           height: "15rem",
           borderRadius: "30px",
-          marginLeft: "-20%",
+          marginLeft: "20%",
         }}
       >
         <div className="card-body">
@@ -48,7 +48,7 @@ function WindCard(props) {
             <div className="row mt-3">
               <h6
                 className="card-text text-center"
-                style={{ color: "white", fontSize: "40px" }}
+                style={{ color: "white", fontSize: "45px" }}
               >
                 {data?.wind.gust} mph
               </h6>
