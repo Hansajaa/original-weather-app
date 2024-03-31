@@ -26,7 +26,7 @@ function FeelsLikeByCelcius(props) {
   let feelsLike = Math.round(data?.main.feels_like);
 
   return (
-    <div className="container" >
+    <div >
       <div
         data-aos="fade-right"
         className="weather-card"

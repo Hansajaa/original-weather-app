@@ -25,7 +25,7 @@ function WindCard(props) {
   },[props?.currentCity])
 
   return (
-    <div className="container" >
+    <div >
       <div
         data-aos="fade-right"
         className="weather-card"
