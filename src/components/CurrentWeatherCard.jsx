@@ -38,8 +38,9 @@ export default function CurrentWeatherCard(props) {
       setData(response.data)
       console.log(response.data);
 
-      const iconCode = data?.weather[0].icon;
-      setImage(iconCode === "01d" ? icon01d:iconCode === "01n" ? icon01n:iconCode === "02d" ? icon02d:iconCode === "02n" ? icon02n:iconCode === "03d" ? icon03d:iconCode === "03n" ? icon03n:iconCode === "04d" ? icon04d:iconCode === "04n" ? icon04n:iconCode === "09d" ? icon09d:iconCode === "09n" ? icon09n:iconCode === "10d" ? icon10d:iconCode === "10n" ? icon10n:iconCode === "11d" ? icon11d:iconCode === "11n" ? icon11n:iconCode === "13d" ? icon13d:iconCode === "13n" ? icon13n:iconCode === "50d" ? icon50d:icon50n);
+      console.log(response.data.weather[0].icon);
+    
+      setImage(response.data.weather[0].icon === "01d" ? icon01d: response.data.weather[0].icon === "01n" ? icon01n: response.data.weather[0].icon === "02d" ? icon02d: response.data.weather[0].icon === "02n" ? icon02n: response.data.weather[0].icon === "03d" ? icon03d: response.data.weather[0].icon === "03n" ? icon03n: response.data.weather[0].icon === "04d" ? icon04d: response.data.weather[0].icon === "04n" ? icon04n: response.data.weather[0].icon === "09d" ? icon09d: response.data.weather[0].icon === "09n" ? icon09n: response.data.weather[0].icon === "10d" ? icon10d: response.data.weather[0].icon === "10n" ? icon10n: response.data.weather[0].icon === "11d" ? icon11d: response.data.weather[0].icon === "11n" ? icon11n: response.data.weather[0].icon === "13d" ? icon13d: response.data.weather[0].icon === "13n" ? icon13n: response.data.weather[0].icon === "50d" ? icon50d:icon50n);
 
     })
     .catch(function(error){
