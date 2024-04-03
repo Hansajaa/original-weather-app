@@ -67,7 +67,7 @@ export default function CurrentWeatherCard(props) {
 
             <div className="row">
               <div className="text-center mt-3">
-                <img src={image} alt="weather-icon" width={120}/>
+                <img className="mb-3" src={image} alt="weather-icon" width={120}/>
                 <p><b>{data?.weather[0].description}</b></p>
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function CurrentWeatherCard(props) {
               </h1>
             </div>
 
-            <hr style={{ color: "white" }}></hr>
+            <hr className="mt-0" style={{ color: "white" }}></hr>
 
             <div className="row">
               <div className="col-3">
