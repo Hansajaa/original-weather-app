@@ -195,7 +195,7 @@ function Navbar() {
       {/* Forecast card row */}
       <div className="row" style={{ marginTop: "-32%", marginLeft: "-17%" }}>
         <div className="col forecast-card">
-          <ForecastCard></ForecastCard>
+          <ForecastCard currentCity={city}></ForecastCard>
         </div>
       </div>
     </div>

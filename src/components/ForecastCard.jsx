@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./ForecastCard.css";
+import axios from "axios";
 import icon01d from '../assets/weather_icons/01d.png'
 import icon01n from '../assets/weather_icons/01n.png'
 import icon02d from '../assets/weather_icons/02d.png'
@@ -19,17 +20,42 @@ import icon13n from '../assets/weather_icons/13n.png'
 import icon50d from '../assets/weather_icons/50d.png'
 import icon50n from '../assets/weather_icons/50n.png'
 
+
+function getMonth(month){
+    return month === "01" ? "Jan": month === "02" ? "Feb": month === "03" ? "Mar": month === "04" ? "Apr": month === "05" ? "May": month === "06" ? "June": month === "07" ? "July": month === "08" ? "Aug": month === "09" ? "Sep": month === "10" ? "Oct": month === "11" ? "Nov": "Dec";
+}
+
 function ForecastCard(props) {
+
+  const apiKey = "ff4b41be54077fc82ce47fc4894362a7";
+
+  const [data, setData] = useState();
+
+  useEffect(()=>{
+    const city = props?.currentCity;
+    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`)
+    .then(function(response){
+      
+      setData(response.data)
+      console.log(response.data);
+    
+    })
+    .catch(function(error){
+      console.log(error);
+    })
+  },[props?.currentCity])
+
   return (
     <div className="container text-center">
       <div className="weather-card">
+
         {/* first day start*/}
         <div className="row" style={{marginLeft:"10%"}}>
           
           {/* Date */}
           <div className="row">
             <div className="col date" style={{marginTop:"2%"}}>
-              <h4 className="text-white">12 Mar</h4>
+              <h4 className="text-white">11 {getMonth("03")}</h4>
             </div>
           </div>
 

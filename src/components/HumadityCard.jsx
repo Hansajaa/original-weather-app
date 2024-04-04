@@ -31,7 +31,7 @@ function HumadityCard(props) {
         className="weather-card"
         style={{
           width: "11rem",
-          height: "15rem",
+          height: "13rem",
           borderRadius: "30px",
           marginLeft: "22%",
         }}
