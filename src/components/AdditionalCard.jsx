@@ -31,7 +31,7 @@ function AdditionalCard(props) {
     },[props?.currentCity])
 
     return (
-        <div>
+        <div data-aos="fade-left">
             <div className={style.weatherCard}>
                 <div className="row">
                     <div className="col">
