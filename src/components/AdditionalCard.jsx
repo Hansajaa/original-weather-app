@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './AdditionalCard.module.css'
+import axios from 'axios';
 
 function AdditionalCard(props) {
+
+    const apiKey = "ff4b41be54077fc82ce47fc4894362a7";
+
+    const [data, setData] = useState();
+
+    const [components, setComponents] = useState();
+
+    useEffect(()=>{
+        const city = props?.currentCity;
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`)
+        .then(function(response){
+          
+          setData(response.data)
+          console.log(response.data);
+
+                axios.get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${response.data.coord.lat}&lon=${response.data.coord.lon}&appid=${apiKey}`)
+                .then(function(response){
+                    console.log(response);
+                    setComponents(response.data.list[0].components)
+                })
+
+        })
+        .catch(function(error){
+          console.log(error);
+        })
+    },[props?.currentCity])
+
     return (
         <div>
             <div className={style.weatherCard}>
@@ -26,16 +54,16 @@ function AdditionalCard(props) {
                 </div>
                 <div className="row" style={{marginLeft:"-3%"}}>
                     <div className="col">
-                        <h2 className='text-white' style={{marginLeft:"55%"}}>3.18</h2>
+                        <h2 className='text-white' style={{marginLeft:"55%"}}>{components?.pm2_5}</h2>
                     </div>
                     <div className="col">
-                        <h2 className='text-white' style={{marginLeft:"55%"}}>3.18</h2>
+                        <h2 className='text-white' style={{marginLeft:"55%"}}>{components?.so2}</h2>
                     </div>
                     <div className="col">
-                        <h2 className='text-white' style={{marginLeft:"55%"}}>3.18</h2>
+                        <h2 className='text-white' style={{marginLeft:"55%"}}>{components?.no2}</h2>
                     </div>
                     <div className="col">
-                        <h2 className='text-white' style={{marginLeft:"55%"}}>3.18</h2>
+                        <h2 className='text-white' style={{marginLeft:"55%"}}>{components?.o3}</h2>
                     </div>
                 </div>
             </div>

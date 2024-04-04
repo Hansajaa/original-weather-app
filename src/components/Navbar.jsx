@@ -176,7 +176,7 @@ function Navbar() {
             </div>
           </div>
           <div className="row">
-            <AdditionalCard></AdditionalCard>
+            <AdditionalCard currentCity={city}></AdditionalCard>
           </div>
         </div>
       </div>
