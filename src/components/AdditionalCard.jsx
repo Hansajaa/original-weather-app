@@ -6,17 +6,15 @@ function AdditionalCard(props) {
 
     const apiKey = "ff4b41be54077fc82ce47fc4894362a7";
 
-    const [data, setData] = useState();
-
-    const [components, setComponents] = useState();
+    const [components, setComponents] = useState({});
 
     useEffect(()=>{
         const city = props?.currentCity;
         axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`)
         .then(function(response){
           
-          setData(response.data)
-          console.log(response.data);
+        //   setData(response.data)
+        //   console.log(response.data);
 
                 axios.get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${response.data.coord.lat}&lon=${response.data.coord.lon}&appid=${apiKey}`)
                 .then(function(response){
