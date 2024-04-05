@@ -8,24 +8,29 @@ function AdditionalCard(props) {
 
     const [components, setComponents] = useState({});
 
-    useEffect(()=>{
-        const city = props?.currentCity;
-        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`)
-        .then(function(response){
-          
-        //   setData(response.data)
-        //   console.log(response.data);
+    const [data, setData] = useState();
 
-                axios.get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${response.data.coord.lat}&lon=${response.data.coord.lon}&appid=${apiKey}`)
-                .then(function(response){
+    async function callApis(){
+        const city = props?.currentCity;
+        await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`)
+        .then(function (response) {
+                  setData(response.data)
+                //   console.log(response.data);
+
+                 axios.get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${response.data.coord.lat}&lon=${response.data.coord.lon}&appid=${apiKey}`)
+                .then(function (response) {
                     console.log(response);
-                    setComponents(response.data.list[0].components)
-                })
+                    setComponents(response.data.list[0].components);
+                });
 
         })
         .catch(function(error){
           console.log(error);
         })
+    }
+
+    useEffect(()=>{
+        callApis();
     },[props?.currentCity])
 
     return (
