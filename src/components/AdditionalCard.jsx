@@ -44,7 +44,7 @@ function AdditionalCard(props) {
                         <p className='text-white' style={{marginLeft:"55%"}}>No <sub>2</sub></p>
                     </div>
                     <div className="col">
-                        <p className='text-white' style={{marginLeft:"55%"}}>O <sub>3</sub></p>
+                        <p className='text-white' style={{marginLeft:"50%"}}>O <sub>3</sub></p>
                     </div>
                 </div>
                 <div className="row" style={{marginLeft:"-3%"}}>
@@ -58,7 +58,7 @@ function AdditionalCard(props) {
                         <h2 className='text-white' style={{marginLeft:"55%"}}>{components?.no2}</h2>
                     </div>
                     <div className="col">
-                        <h2 className='text-white' style={{marginLeft:"55%"}}>{components?.o3}</h2>
+                        <h2 className='text-white' style={{marginLeft:"38%"}}>{components?.o3}</h2>
                     </div>
                 </div>
             </div>
