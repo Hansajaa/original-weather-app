@@ -57,16 +57,24 @@ function Navbar() {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    reset,
+    formState: { errors,isSubmitSuccessful },
   } = useForm();
 
   // API call while button onClick
   const onSubmit = (data) => {
     setCity(data.txtCity);
+    reset();
   };
 
+  useEffect(()=>{
+    if(isSubmitSuccessful){
+      reset({txtCity:""})
+    }
+  },[city]);
+
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{marginLeft:"1.5%"}}>
       <div className="row">
         <nav className="navbar navbar-dark fixed-top mt-3">
           <div className="container-fluid">

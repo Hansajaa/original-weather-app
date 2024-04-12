@@ -56,6 +56,7 @@
 
 /* Styles for screens 1025px and above (larger desktops) */
 @media (min-width: 1025px) {
+
   #searchBtn {
     margin-left: -20%;
   }
