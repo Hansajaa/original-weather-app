@@ -21,12 +21,12 @@ function Footer(props) {
               </a>
             </li>
             <li class="ms-3">
-              <a class="text-body-secondary" href="#">
+              <a class="text-body-secondary" href="https://www.instagram.com/_.hansajaaa__/">
               <img src={instagramIcon} alt="" width={34} height={34}/>
               </a>
             </li>
             <li class="ms-3">
-              <a class="text-body-secondary" href="#">
+              <a class="text-body-secondary" href="https://www.facebook.com/nilana.hansaja.3/">
               <img src={facebookIcon} alt="" width={34} height={34}/>
               </a>
             </li>
