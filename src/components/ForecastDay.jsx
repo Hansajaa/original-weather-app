@@ -18,7 +18,6 @@ import icon13d from "../assets/weather_icons/13d.png";
 import icon13n from "../assets/weather_icons/13n.png";
 import icon50d from "../assets/weather_icons/50d.png";
 import icon50n from "../assets/weather_icons/50n.png";
-import ForecastDayTime from "./ForecastDayTime";
 
 function ForecastDay({ date, forecastData }) {
   function getMonth(month) {
