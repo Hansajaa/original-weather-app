@@ -197,7 +197,7 @@ function Navbar() {
           marginLeft: "-8%",
         }}
       >
-        <b>5 Days Forecast</b>
+        <b>Weather Forecast</b>
       </p>
 
       {/* Forecast card row */}

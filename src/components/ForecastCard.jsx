@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import "./ForecastCard.css";
 import axios from "axios";
 import icon01d from '../assets/weather_icons/01d.png'
@@ -19,10 +19,48 @@ import icon13d from '../assets/weather_icons/13d.png'
 import icon13n from '../assets/weather_icons/13n.png'
 import icon50d from '../assets/weather_icons/50d.png'
 import icon50n from '../assets/weather_icons/50n.png'
+import ForecastDay from "./ForecastDay";
 
 
 function getMonth(month){
-    return month === "01" ? "Jan": month === "02" ? "Feb": month === "03" ? "Mar": month === "04" ? "Apr": month === "05" ? "May": month === "06" ? "June": month === "07" ? "July": month === "08" ? "Aug": month === "09" ? "Sep": month === "10" ? "Oct": month === "11" ? "Nov": "Dec";
+    return month === 0 ? "Jan": month === 1 ? "Feb": month === 2 ? "Mar": month === 3 ? "Apr": month === 4 ? "May": month === 5 ? "June": month === 6 ? "July": month === 7 ? "Aug": month === 8 ? "Sep": month === 9 ? "Oct": month === 10 ? "Nov": "Dec";
+}
+
+function getDayOfWeek(dayOfWeek){
+    return dayOfWeek === 0 ? "Sun": dayOfWeek === 1 ? "Mon": dayOfWeek === 2 ? "Tue": dayOfWeek === 3 ? "Wed": dayOfWeek === 4 ? "Thu": dayOfWeek === 5 ? "Fri":"Sat";
+}
+
+const ACTION = {
+    DAY_ONE : "day-one",
+    DAY_TWO : "day-two",
+    DAY_THREE : "day-three",
+    DAY_FOUR : "day-four",
+    CLEAR_DATES : "clear-dates"
+}
+
+function reducer(dates, action){
+    switch(action.type){
+        case ACTION.CLEAR_DATES : 
+            return [];
+        case ACTION.DAY_ONE : 
+            return [...dates, newDate(action.payload.id, action.payload.date.getFullYear(), getMonth(action.payload.date.getMonth()), action.payload.date.getDate(), getDayOfWeek(action.payload.date.getDay()))];
+        case ACTION.DAY_TWO : 
+            return [...dates, newDate(action.payload.id, action.payload.date.getFullYear(), getMonth(action.payload.date.getMonth()), action.payload.date.getDate(), getDayOfWeek(action.payload.date.getDay()))];
+        case ACTION.DAY_THREE : 
+            return [...dates, newDate(action.payload.id, action.payload.date.getFullYear(), getMonth(action.payload.date.getMonth()), action.payload.date.getDate(), getDayOfWeek(action.payload.date.getDay()))];
+        case ACTION.DAY_FOUR : 
+            return [...dates, newDate(action.payload.id, action.payload.date.getFullYear(), getMonth(action.payload.date.getMonth()), action.payload.date.getDate(), getDayOfWeek(action.payload.date.getDay()))];
+    }
+}
+
+function newDate(id, year, month, day, dayOfWeek){
+    return {
+        id:id,
+        year:year,
+        month:month,
+        day:day,
+        dayOfWeek:dayOfWeek
+    }
 }
 
 function ForecastCard(props) {
@@ -30,6 +68,33 @@ function ForecastCard(props) {
   const apiKey = "ff4b41be54077fc82ce47fc4894362a7";
 
   const [data, setData] = useState();
+  const [dates, dispatch] = useReducer(reducer, []);
+
+
+  function prepareDates(){
+      dispatch({type: ACTION.CLEAR_DATES});
+
+      const currentDate = new Date();
+      
+      const oneDayAfter = new Date(currentDate);
+      oneDayAfter.setDate(currentDate.getDate() + 1);
+      
+      const twoDayAfter = new Date(currentDate);
+      twoDayAfter.setDate(currentDate.getDate() + 2);
+      
+      const threeDayAfter = new Date(currentDate);
+      threeDayAfter.setDate(currentDate.getDate() + 3);
+     
+      const fourDayAfter = new Date(currentDate);
+      fourDayAfter.setDate(currentDate.getDate() + 4);
+      
+      dispatch({type: ACTION.DAY_ONE, payload:{id:1, date: oneDayAfter}});
+      dispatch({type: ACTION.DAY_TWO, payload:{id:2, date: twoDayAfter}});
+      dispatch({type: ACTION.DAY_THREE, payload:{id:3, date: threeDayAfter}});
+      dispatch({type: ACTION.DAY_FOUR, payload:{id:4, date: fourDayAfter}});
+
+  }
+
 
   useEffect(()=>{
     const city = props?.currentCity;
@@ -38,556 +103,29 @@ function ForecastCard(props) {
       
       setData(response.data)
       console.log(response.data);
-    
+      prepareDates();
     })
     .catch(function(error){
       console.log(error);
     })
   },[props?.currentCity])
 
+
+  console.log(dates);
+
   return (
     <div className="container text-center">
       <div className="weather-card">
 
-        {/* first day start*/}
-        <div className="row" style={{marginLeft:"10%"}}>
-          
-          {/* Date */}
-          <div className="row">
-            <div className="col date" style={{marginTop:"2%"}}>
-              <h4 className="text-white">11 {getMonth("03")}</h4>
-            </div>
-          </div>
-
-          {/* Time row */}
-          <div className="row" style={{marginTop:"-2%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">12 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">6 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">9 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">12 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">3 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">6 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">9 PM</p>
-            </div>
-          </div>
-
-          {/* Icon row */}
-          <div className="row" style={{marginTop:"-2%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon01d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon01n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon02d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon02n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon03d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon03n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon09d} alt="" />
-            </div>
-          </div>
-
-          {/* Temperature row */}
-          <div className="row" style={{marginTop:"-1%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-          </div> 
-        </div>
         
-        {/* first day end*/}
-
-        <hr className="mx-auto text-white" style={{ borderTop: "2px solid" }} width="90%"></hr>
-
-        {/* second day start*/}
-        <div className="row" style={{marginLeft:"10%"}}>
-          
-          {/* Date */}
-          <div className="row">
-            <div className="col date" style={{marginTop:"2%"}}>
-              <h4 className="text-white">12 Mar</h4>
-            </div>
-          </div>
-
-          {/* Time row */}
-          <div className="row" style={{marginTop:"-2%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">12 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">6 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">9 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">12 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">3 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">6 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">9 PM</p>
-            </div>
-          </div>
-
-          {/* Icon row */}
-          <div className="row" style={{marginTop:"-2%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon01d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon01n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon02d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon02n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon03d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon03n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon09d} alt="" />
-            </div>
-          </div>
-
-          {/* Temperature row */}
-          <div className="row" style={{marginTop:"-1%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-          </div> 
-        </div>
-        
-        {/* second day end*/}
-
-        <hr className="mx-auto text-white" style={{ borderTop: "2px solid" }} width="90%"></hr>
-
-
-        {/* third day start*/}
-        <div className="row" style={{marginLeft:"10%"}}>
-          
-          {/* Date */}
-          <div className="row">
-            <div className="col date" style={{marginTop:"2%"}}>
-              <h4 className="text-white">12 Mar</h4>
-            </div>
-          </div>
-
-          {/* Time row */}
-          <div className="row" style={{marginTop:"-2%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">12 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">6 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">9 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">12 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">3 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">6 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">9 PM</p>
-            </div>
-          </div>
-
-          {/* Icon row */}
-          <div className="row" style={{marginTop:"-2%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon01d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon01n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon02d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon02n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon03d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon03n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon09d} alt="" />
-            </div>
-          </div>
-
-          {/* Temperature row */}
-          <div className="row" style={{marginTop:"-1%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-          </div> 
-        </div>
-        
-        {/* third day end*/}
-
-        <hr className="mx-auto text-white" style={{ borderTop: "2px solid" }} width="90%"></hr>
-
-        {/* fourth day start*/}
-        <div className="row" style={{marginLeft:"10%"}}>
-          
-          {/* Date */}
-          <div className="row">
-            <div className="col date" style={{marginTop:"2%"}}>
-              <h4 className="text-white">12 Mar</h4>
-            </div>
-          </div>
-
-          {/* Time row */}
-          <div className="row" style={{marginTop:"-2%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">12 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">6 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">9 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">12 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">3 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">6 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">9 PM</p>
-            </div>
-          </div>
-
-          {/* Icon row */}
-          <div className="row" style={{marginTop:"-2%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon01d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon01n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon02d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon02n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon03d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon03n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon09d} alt="" />
-            </div>
-          </div>
-
-          {/* Temperature row */}
-          <div className="row" style={{marginTop:"-1%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-          </div> 
-        </div>
-        
-        {/* fourth day end*/}
-
-        <hr className="mx-auto text-white" style={{ borderTop: "2px solid" }} width="90%"></hr>
-
-        {/* fifth day start*/}
-        <div className="row mb-5" style={{marginLeft:"10%"}}>
-          
-          {/* Date */}
-          <div className="row">
-            <div className="col date" style={{marginTop:"2%"}}>
-              <h4 className="text-white">12 Mar</h4>
-            </div>
-          </div>
-
-          {/* Time row */}
-          <div className="row" style={{marginTop:"-2%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">12 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">6 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">9 AM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">12 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">3 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">6 PM</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="text-white">9 PM</p>
-            </div>
-          </div>
-
-          {/* Icon row */}
-          <div className="row" style={{marginTop:"-2%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon01d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon01n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon02d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon02n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon03d} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon03n} alt="" />
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <img className="weather-img" src={icon09d} alt="" />
-            </div>
-          </div>
-
-          {/* Temperature row */}
-          <div className="row" style={{marginTop:"-1%", marginLeft:"15%"}}>
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-              <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-
-            <div className="col" style={{marginLeft:"-44%", marginTop:"2%"}}>
-            <p className="temp">25 &#8451;</p>
-            </div>
-          </div> 
-        </div>
-        
-        {/* fifth day end*/}
-
+      {dates.map((date)=>{
+          return(
+              <div>
+                  <ForecastDay  date={date} forecastData={data}></ForecastDay>
+                  {date.id < 4 && <hr className="mx-auto" style={{border: "1px solid white", width:"90%", textAlign:"center"}}/>}
+              </div>
+          ) 
+      })}
 
         
         
